@@ -95,5 +95,22 @@ public class ChatBoxActivity extends AppCompatActivity {
                 });
             }
         });
+        socket.on("userdisconnect", new Emitter.Listener() {
+            @Override
+            public void call(final Object... args) {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String data = (String) args[0];
+                        Toast.makeText(ChatBoxActivity.this,data,Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        });
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        socket.disconnect();
     }
 }
